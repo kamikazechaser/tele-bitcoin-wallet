@@ -1,0 +1,17 @@
+{
+  "name": "tele-bitcoin-wallet",
+  "version": "1.0.0",
+  "description": "A Bitcoin wallet for Telegram",
+  "main": "wallet.js",
+  "repository": "https://github.com/kamikazechaser/tele-bitcoin-wallet.git",
+  "author": "Mohammed Sohail <sohailsameja@forfuture.tech>",
+  "license": "AGPL-3.0",
+  "dependencies": {
+    "blocktrail-sdk": "^3.0.10",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "lodash": "^4.17.4",
+    "mau": "^0.1.0",
+    "node-telegram-bot-api": "^0.27.1"
+  }
+}
