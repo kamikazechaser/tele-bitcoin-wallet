@@ -30,6 +30,5 @@ exports = module.exports = {
     wallet: {
         name: "-",
         pass: "-",
-        webhook_id: "-"
     }    
 }

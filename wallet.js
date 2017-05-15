@@ -12,6 +12,7 @@ const blocktrail = require("blocktrail-sdk");
 const express = require("express");
 const mau = require("mau");
 const TelegramBot = require("node-telegram-bot-api");
+const uuid = require("uuid/v1");
 
 
 // own modules
@@ -21,7 +22,7 @@ const config = require("./config");
 // module variables
 const client = blocktrail.BlocktrailSDK(config.blocktrail);
 
-const bot = new TelegramBot(config.telegram.token);
+const bot = new TelegramBot(config.telegram.token, { polling: true });
 
 const app = express();
 app.use(bodyParser.json());
@@ -43,7 +44,7 @@ app.post("/wallet", (req, res) => {
 });
 
 app.post("/bot", (req, res) => {
-    bot.processUpdate(req.body);
+    //bot.processUpdate(req.body);
     return res.sendStatus(200);
 });
 
@@ -118,19 +119,12 @@ bot.onText(/⬇️ Receive Bitcoins/, msg => {
                                 ]
                             }
                         });
-                        bot.sendMessage(config.telegram.channel, `<b>New address generated</b>\n\n<code>${address}</code>`, {
+                        return bot.sendMessage(config.telegram.channel, `<b>New address generated</b>\n\n<code>${address}</code>`, {
                             parse_mode: "HTML",
                             reply_markup: {
                                 inline_keyboard: [
                                     [{ text: "📑 See transactions", url: `https://blockchain.info/address/${address}`}]
                                 ]
-                            }
-                        });
-                        return client.subscribeAddressTransactions(config.wallet.webhook_id, address, 6, (error, result) => {
-                            if (error) {
-                                return console.log(error);
-                            } else {
-                                return console.log("Subscribed to event.");
                             }
                         });
                     }
@@ -152,6 +146,41 @@ bot.on("callback_query", msg => {
     });
 });
 
+bot.on("inline_query", msg => {
+    client.price((error, price) => {
+        if (error) {
+            console.log("Cannot fetch market price.")
+        } else {
+            const isNumber = !isNaN(msg.query);
+            const amount = parseFloat(msg.query) / price.USD;
+
+            if (!isNumber) {
+                const data = [{
+                    type: "article",
+                    id: uuid(),
+                    title: `Not a valid amount.`,
+                    message_text: "Please eneter a valid amount",
+                    thumb_url: "http://emojipedia-us.s3.amazonaws.com/cache/fe/60/fe60e1bd45961cb128c4869269826d7f.png"
+                }]
+                bot.answerInlineQuery(msg.id, data, {
+                    cache_time: 5
+                });
+            } else {
+                const data = [{
+                    type: "article",
+                    id: uuid(),
+                    title: `$${msg.query} to BTC`,
+                    message_text: amount.toFixed(8).toString(),
+                    thumb_url: "https://emojipedia-us.s3.amazonaws.com/cache/9b/68/9b68b55b9f9e590c0eca337730b976cf.png"
+                }]
+                bot.answerInlineQuery(msg.id, data, {
+                    cache_time: 5
+                });
+            }
+        }
+    });
+});
+
 formset.addForm("send_form", [{
         name: "send_address",
         text: "Please enter the recepients Bitcoin address.",
@@ -168,7 +197,7 @@ formset.addForm("send_form", [{
     },
     {
         name: "send_amount",
-        text: "Please enter the amount you want to send in Bitcoins.",
+        text: "Please enter the amount you want to send in Bitcoins.\n\nIf you want to enter the amount in USD, use inline mode.",
 
         post(answer, done) {
             const isNumber = !isNaN(answer);
