@@ -22,7 +22,7 @@ const config = require("./config");
 // module variables
 const client = blocktrail.BlocktrailSDK(config.blocktrail);
 
-const bot = new TelegramBot(config.telegram.token, { polling: true });
+const bot = new TelegramBot(config.telegram.token);
 
 const app = express();
 app.use(bodyParser.json());
@@ -44,7 +44,7 @@ app.post("/wallet", (req, res) => {
 });
 
 app.post("/bot", (req, res) => {
-    //bot.processUpdate(req.body);
+    bot.processUpdate(req.body);
     return res.sendStatus(200);
 });
 
