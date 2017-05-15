@@ -47,8 +47,9 @@ app.post("/bot", (req, res) => {
     return res.sendStatus(200);
 });
 
-app.listen(3000, () => {
-    return console.log("server started")
+
+app.listen(config.app.port, () => {
+    return console.log("Express server started");
 });
 
 
@@ -125,7 +126,7 @@ bot.onText(/⬇️ Receive Bitcoins/, msg => {
                                 ]
                             }
                         });
-                        return client.subscribeAddressTransactions("ngrok", address, 6, (error, result) => {
+                        return client.subscribeAddressTransactions(config.wallet.webhook_id, address, 6, (error, result) => {
                             if (error) {
                                 return console.log(error);
                             } else {

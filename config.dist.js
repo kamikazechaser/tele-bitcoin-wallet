@@ -6,6 +6,9 @@
  */
 
 exports = module.exports = {
+    app: {
+        port: 80
+    },
     blocktrail: {
         apiKey: "-",
         apiSecret: "-",
@@ -26,6 +29,7 @@ exports = module.exports = {
     },
     wallet: {
         name: "-",
-        pass: "-"
+        pass: "-",
+        webhook_id: "-"
     }    
 }
