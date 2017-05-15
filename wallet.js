@@ -35,10 +35,7 @@ app.post("/wallet", (req, res) => {
         parse_mode: "HTML",
         reply_markup: {
             inline_keyboard: [
-                [{
-                    text: "📑 See transaction",
-                    url: `https://blockchain.info/tx/${req.body.data.hash}`
-                }]
+                [{ text: "📑 See transaction", url: `https://blockchain.info/tx/${req.body.data.hash}` }]
             ]
         }
     });
@@ -161,9 +158,9 @@ formset.addForm("send_form", [{
         post(answer, done) {
             const isBitcoinAddress = /^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(answer);
 
-           if (!isBitcoinAddress) {
+            if (!isBitcoinAddress) {
                 return this.retry("You need to send me a valid Bitcoin address.", done);
-           }
+            }
 
             return done();
         }
