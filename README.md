@@ -41,6 +41,7 @@ A lot (in fact, I have come across none) of Bitcoin bots on Telegram do not give
 
  - Create a bot with [@botfather](https://t.me/botfather)
  - Add the token to its respective field in the config file
+ - Enable inline mode
  - Add your Telegram ID (can be obtained from [@myidbot](https://t.me/myidbot)) to its respective field inside the administrators block of the config file. i.e replace the `0` with your ID
  - If you would like to give some other Telegram user access, add their IDs too, else you can either remove the objects or leave them there
  - Add your channel ID to receive notifications. If you are the sole user of the bot, you can use your own ID instead 
