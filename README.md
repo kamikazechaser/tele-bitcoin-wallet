@@ -1,4 +1,5 @@
- [![https://telegram.me/kamikazechaser](https://img.shields.io/badge/%F0%9F%92%AC_Telegram-kamikazechaser-blue.svg?style=flat-square)](https://telegram.me/kamikazechaser)
+ [![Telegram](https://img.shields.io/badge/%F0%9F%92%AC_Telegram-kamikazechaser-blue.svg?style=flat-square)](https://telegram.me/kamikazechaser)
+ [![Imgur](https://img.shields.io/badge/screenshots-imgur-brightgreen.svg?style=flat-square)](https://imgur.com/gallery/juYrG)
  > Tele Bitcoin Wallet
 
  A simple Bitcoin bot for Telegram
@@ -34,7 +35,7 @@ A lot (in fact, I have come across none) of Bitcoin bots on Telegram do not give
  - Create a wallet and add the identifier and password you choose to the config file in the `wallet` section, i.e, name and pass respectively
  - Headover to the settings tab in Blocktrail and create  a new API key. Add these values to the `blocktrail` section of the config file
 
- **Note:_ Make sure you save the PDF recovery file to a safe location!**
+ **Note: Make sure you save the PDF recovery file to a safe location!**
 
  *Telegram configuration*
 
